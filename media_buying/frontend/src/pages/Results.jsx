@@ -5,15 +5,15 @@ import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 // Importation de la fonction permettant de récupérer les campagnes depuis l'API
-import { fetchCampaigns } from '../services/api';
+import { fetchResults } from '../services/api';
 
 // Définition du composant Campaigns
-export default function Campaigns() {
+export default function Results() {
   // Récupération de la fonction de traduction depuis le contexte de langue
   const { t } = useLanguage();
 
   // Déclaration de l'état local pour stocker les campagnes récupérées
-  const [campaigns, setCampaigns] = useState([]);
+  const [Results, setResults] = useState([]);
 
   // État pour gérer l'affichage du chargement
   const [loading, setLoading] = useState(true);
@@ -24,14 +24,14 @@ export default function Campaigns() {
   // useEffect s'exécute au montage du composant
   useEffect(() => {
     // Fonction asynchrone pour récupérer les campagnes
-    const loadCampaigns = async () => {
+    const loadResults = async () => {
       try {
         // Appel de l'API pour récupérer les campagnes
-        const response = await fetchCampaigns();
+        const response = await fetchResults();
         
         // Mise à jour de l'état avec les données reçues
-        setCampaigns(response.data);
-        
+        setResults(response.data);
+        //console.log(response.data)
         // Désactivation du mode chargement
         setLoading(false);
       } catch (err) {
@@ -44,7 +44,7 @@ export default function Campaigns() {
     };
 
     // Exécution de la fonction de chargement des campagnes
-    loadCampaigns();
+    loadResults();
   }, [t]); // Dépendance sur `t` pour s'assurer que la traduction est mise à jour en cas de changement de langue
 
   // Affichage d'un message de chargement tant que les données ne sont pas récupérées
@@ -61,20 +61,20 @@ export default function Campaigns() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Titre de la section, traduit selon la langue sélectionnée */}
-      <h2 className="text-2xl font-bold mb-6">{t('campaigns')}</h2>
+      <h2 className="text-2xl font-bold mb-6">{t('results')}</h2>
 
       {/* Grille responsive pour afficher les campagnes sous forme de cartes */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {campaigns.map((campaign) => (
+        {Results.map((Result) => (
           // Chaque campagne est affichée sous forme de carte avec un titre et une description
-          <div key={campaign.id} className="bg-white p-6 rounded-lg shadow-md">
-            <h3 className="text-lg font-semibold">{campaign.name}</h3>
-            <p className="text-gray-600 mt-2">{campaign.description}</p>
-            <p className="text-gray-600 mt-2">{campaign.campaign_type}</p>
-            <p className="text-gray-600 mt-2">{campaign.budget}</p>
-            <p className="text-gray-600 mt-2">{campaign.start_date}</p>
-            <p className="text-gray-600 mt-2">{campaign.end_date}</p>
-            <p className="text-gray-600 mt-2">{campaign.target_audience}</p>
+          <div key={Result.id} className="bg-white p-6 rounded-lg shadow-md">
+            <h3 className="text-lg font-semibold">{Result.campaign.name}</h3>
+            <p className="text-gray-600 mt-2">{Result.impressions}</p>
+            <p className="text-gray-600 mt-2">{Result.clicks}</p>
+            <p className="text-gray-600 mt-2">{Result.conversions}</p>
+            <p className="text-gray-600 mt-2">{Result.cost_per_click}</p>
+            <p className="text-gray-600 mt-2">{Result.conversion_rate}</p>
+            <p className="text-gray-600 mt-2">{Result.roas}</p>
           </div>
         ))}
       </div>

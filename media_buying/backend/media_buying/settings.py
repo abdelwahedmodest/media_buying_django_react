@@ -1,5 +1,6 @@
 
 from pathlib import Path
+import  os 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,7 +16,12 @@ SECRET_KEY = 'django-insecure-7i^r@vxk77jk=%mdi@s$%%2b#e)wklix=mxmzzg+df^^o9749m
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# Update CORS settings to allow requests from React frontend
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # vite  development server
+]
 
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -26,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
      'rest_framework',  # Django REST Framework
     'simulation',  # Your app
     
@@ -39,6 +46,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'media_buying.urls'
@@ -107,9 +116,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
 
+# Update static files settings
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Update media files settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

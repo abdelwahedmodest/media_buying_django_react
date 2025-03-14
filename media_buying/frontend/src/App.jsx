@@ -4,6 +4,8 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Campaigns from './pages/Campaigns';
+import  Keywords  from  './pages/Keywords';
+import  Results  from   './pages/Results';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/campaigns" element={<Campaigns />} />
+              <Route path="/keywords" element={<Keywords />} />
+              <Route path="/results" element={<Results />} />
             </Routes>
           </main>
         </div>
